@@ -1,0 +1,10 @@
+node_modules
+.env
+package-lock.json
+node_modules
+.env
+package-lock.json
+sendgrid.env
+frontEnd
+.frontEnd
+.package-lock.json

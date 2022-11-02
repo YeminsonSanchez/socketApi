@@ -1,0 +1,33 @@
+import express from 'express'
+import cors from 'cors'
+import dotenv from 'dotenv'
+
+dotenv.config()
+
+const app = express()
+
+const PORT = process.env.PORT || 3000
+
+//todo hay que cambiar luego la configuracion de cors en whitelist
+
+// cost whitelist = ['http://example1.com', 'http://example2.com']
+// cost corsOptions = {
+// 	origin: function (origin, callback) {
+// 		if (whitelist.indexOf(origin) !== -1) {
+// 			callback(null, true)
+// 		} else {
+// 			callback(new Error('Not allowed by CORS'))
+// 		}
+// 	},
+// }
+
+app.use(cors())
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+
+app.listen(PORT, () => {
+	console.log('Server started on port ' + PORT)
+})
+
+export default app
