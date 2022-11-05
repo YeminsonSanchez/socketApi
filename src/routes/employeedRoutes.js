@@ -1,7 +1,13 @@
 const express = require('express')
 const router = express.Router()
 
-const { create, getAllEmployees, getEmployeById, update, removeEmployeed } = require('../controllers/employeesController')
+const {
+	create,
+	getAllEmployees,
+	getEmployeById,
+	update,
+	removeEmployeed,
+} = require('../controllers/employeesController')
 
 router.post('/employeed', create)
 router.get('/employeed', getAllEmployees)

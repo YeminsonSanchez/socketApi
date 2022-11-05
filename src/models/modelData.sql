@@ -71,22 +71,3 @@ CREATE TABLE product_order (
   FOREIGN KEY (product_id) REFERENCES product(id),
   FOREIGN KEY (purchase_order_id) REFERENCES purchase_order(id)
 );
-
--- CREATE TABLE product_order (
---   id SERIAL PRIMARY KEY,
---   order INT NOT NULL,
---   product_id INT NOT NULL,
---   quantity INT NOT NULL CHECK (quantity > 0),
---   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
---   updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
---   FOREIGN KEY (product_id) REFERENCES product(id)
--- );
-
-
-cliente compra (2 panes, 2 mayos, salchipaspas, 1 coca cola)
-
-
-mesonero x (cliente los productos) (n orden)
-meosnero x (cliente2 los productos) (n orden)
-
-cocinero (orden del mesonero x)

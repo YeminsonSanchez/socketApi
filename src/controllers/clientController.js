@@ -8,7 +8,7 @@ const {
 	getAllClient,
 } = require('../models/clientModels')
 
-const create = async (req, res) => {
+const createClient = async (req, res) => {
 	const { rut_business, name, email, phone, address, region, comune, zip } =
 		req.body
 
@@ -30,7 +30,7 @@ const create = async (req, res) => {
 	}
 }
 
-const update = async (req, res) => {
+const putClient = async (req, res) => {
 	const { id } = req.params
 	const { rut_business, name, email, phone, address, region, comune, zip } =
 		req.body
@@ -55,7 +55,7 @@ const update = async (req, res) => {
 	}
 }
 
-const remove = async (req, res) => {
+const removeClient = async (req, res) => {
 	const { id } = req.params
 	try {
 		const result = await deleteClient(id)
@@ -65,7 +65,7 @@ const remove = async (req, res) => {
 	}
 }
 
-const get = async (req, res) => {
+const getClientById = async (req, res) => {
 	const { id } = req.params
 	try {
 		const result = await getClient(id)
@@ -75,7 +75,7 @@ const get = async (req, res) => {
 	}
 }
 
-const getAll = async (req, res) => {
+const getAllClients = async (req, res) => {
 	try {
 		const result = await getAllClient()
 		return res.status(201).json(result)
@@ -83,4 +83,10 @@ const getAll = async (req, res) => {
 		showError(res, error)
 	}
 }
-module.exports = { create, update, remove, get, getAll }
+module.exports = {
+	createClient,
+	getClientById,
+	removeClient,
+	putClient,
+	getAllClients,
+}
