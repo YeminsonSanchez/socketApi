@@ -1,1 +1,2 @@
 DATABASE_URL="url db here"
+JWT_SECRET="Your Key Secret"

@@ -41,7 +41,7 @@ const seedsClient = async () => {
 			comune: faker.address.city(),
 			zip: faker.address.zipCode(),
 		}
-		await newClient(payloadClient)
+		// await newClient(payloadClient)
 		// console.log(payloadClient)
 	}
 }
