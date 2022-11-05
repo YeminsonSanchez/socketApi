@@ -1,6 +1,6 @@
-import express from 'express'
-import cors from 'cors'
-import dotenv from 'dotenv'
+const express = require('express')
+const cors = require('cors')
+const dotenv = require('dotenv')
 
 dotenv.config()
 
@@ -30,4 +30,4 @@ app.listen(PORT, () => {
 	console.log('Server started on port ' + PORT)
 })
 
-export default app
+module.exports = app

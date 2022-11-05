@@ -1,6 +1,5 @@
-const Pool = require('pg')
+const { Pool } = require('pg')
 
-console.log('Pool: ', Pool)
 const config = {
 	connectionString: process.env.DATABASE_URL,
 	max: 20,
@@ -8,7 +7,7 @@ const config = {
 	connectionTimeoutMillis: 2000,
 }
 // patron Singleton instance
-exports.Singleton = (() => {
+const Singleton = (() => {
 	let instance
 	function createInstance() {
 		const classObj = new Pool(config)
@@ -26,3 +25,5 @@ exports.Singleton = (() => {
 		},
 	}
 })()
+
+module.exports = Singleton

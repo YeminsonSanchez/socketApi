@@ -1,4 +1,4 @@
-export const showError = (res, e) => {
+const showError = (res, e) => {
 	const responseError = {
 		error: 'Internal Server Error',
 		mesagge: e.message,
@@ -7,3 +7,5 @@ export const showError = (res, e) => {
 
 	return res.status(500).json(responseError)
 }
+
+module.exports = { showError }

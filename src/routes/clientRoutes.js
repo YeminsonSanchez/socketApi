@@ -1,7 +1,17 @@
-import express from 'express'
-const routerClient = express.Router()
-import { create } from './../controller/clientController.js'
+const express = require('express')
+const router = express.Router()
+const {
+	create,
+	update,
+	remove,
+	get,
+	getAll,
+} = require('../controllers/clientController')
 
 router.post('/client', create)
+router.put('/client/:id', update)
+router.delete('/client/:id', remove)
+router.get('/client/:id', get)
+router.get('/client', getAll)
 
-export { routerClient }
+module.exports = router

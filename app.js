@@ -1,5 +1,5 @@
-import app from './server.js'
-import { routerClient } from './src/routes/clientRoutes.js'
+const app = require('./server')
 
-app.use('/', routerClient)
-export default app
+app.use('/', require('./src/routes/clientRoutes'))
+
+module.exports = app
