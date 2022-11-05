@@ -1,4 +1,4 @@
-const { showError } = require('./../helpers/showError')
+const { showError } = require('../helpers/showError')
 const {
 	newProduct,
 	getAllProduct,

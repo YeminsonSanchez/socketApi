@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const { authEmployeed } = require('./../middlewares/authEmployeed')
-const { authAdmin } = require('./../middlewares/authAdmin')
+const { authEmployeed } = require('../middlewares/authEmployeed')
+const { authAdmin } = require('../middlewares/authAdmin')
 
 const {
 	createClient,

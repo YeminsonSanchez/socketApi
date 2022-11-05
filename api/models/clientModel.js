@@ -1,4 +1,4 @@
-const pool = require('./../helpers/connectDb').getInstance()
+const pool = require('../helpers/connectDb').getInstance()
 
 const newClient = async (payload) => {
 	const SQLquery = {
