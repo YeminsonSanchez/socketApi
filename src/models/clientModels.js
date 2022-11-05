@@ -85,7 +85,7 @@ const getClient = async (id) => {
 
 const getAllClient = async () => {
 	const SQLquery = {
-		text: 'SELECT id, rut_business, name, email, phone, address, region, comune, zip, created_at, update_at FROM client',
+		text: 'SELECT id, rut_business, name, email, phone, address, region, comune, zip, created_at, updated_at FROM client',
 	}
 	try {
 		const result = await pool.query(SQLquery)
@@ -96,7 +96,6 @@ const getAllClient = async () => {
 		throw new Error(e)
 	}
 }
-
 
 module.exports = {
 	newClient,
