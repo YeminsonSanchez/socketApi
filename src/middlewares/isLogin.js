@@ -1,7 +1,7 @@
 const { validateToken } = require('../helpers/validateJwt');
 const { showError } = require('../helpers/showError');
 
-const authEmployeed = async (req, res, next) => {
+const isLogin = async (req, res, next) => {
 	try {
 		if (!req.header('Authorization')) {
 			return res.status(401).send({ message: 'Por favor inicia sesion' });
@@ -18,4 +18,4 @@ const authEmployeed = async (req, res, next) => {
 	}
 };
 
-module.exports = { authEmployeed };
+module.exports = { isLogin };

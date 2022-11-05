@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { authEmployeed } = require('../middlewares/authEmployeed')
+const { isLogin } = require('../middlewares/isLogin')
 const { authAdmin } = require('../middlewares/authAdmin')
 
 const {
@@ -11,10 +11,14 @@ const {
 	getAllClients,
 } = require('../controllers/clientsController')
 
-router.post('/clients', authEmployeed, authAdmin, createClient)
-router.put('/clients/:id', authEmployeed, putClient)
-router.delete('/clients/:id', authEmployeed, authAdmin, removeClient)
-router.get('/clients/:id', authEmployeed, getClientById)
-router.get('/clients', authEmployeed, getAllClients)
+// authEmployed
+router.put('/clients/:id', isLogin, putClient)
+router.get('/clients/:id', isLogin, getClientById)
+router.get('/clients', isLogin, getAllClients)
+
+// authAdmin
+router.delete('/clients/:id', isLogin, authAdmin, removeClient)
+router.post('/clients', isLogin, authAdmin, createClient)
+
 
 module.exports = router

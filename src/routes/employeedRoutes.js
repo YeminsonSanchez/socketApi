@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { authEmployeed } = require('../middlewares/authEmployeed')
+const { isLogin } = require('../middlewares/isLogin')
 const { authAdmin } = require('../middlewares/authAdmin')
 
 const {
@@ -11,10 +11,13 @@ const {
 	removeEmployeed,
 } = require('../controllers/employeesController')
 
-router.post('/employeed', authEmployeed, authAdmin, create)
-router.get('/employeed', authEmployeed, authAdmin, getAllEmployees)
-router.get('/employeed/:id', authEmployeed, authAdmin, getEmployeById)
-router.put('/employeed/:id', authEmployeed, authAdmin, update)
-router.delete('/employeed/:id', authEmployeed, authAdmin, removeEmployeed)
+// authEmployed
+router.get('/employeed', isLogin, getAllEmployees)
+router.get('/employeed/:id', isLogin, getEmployeById)
+router.put('/employeed/:id', isLogin, update)
+
+// authAdmin
+router.delete('/employeed/:id', isLogin, authAdmin, removeEmployeed)
+router.post('/employeed', isLogin, authAdmin, create)
 
 module.exports = router

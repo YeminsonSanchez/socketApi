@@ -6,13 +6,17 @@ const {
 	deleteEmployeed,
 } = require('../models/employeedModel')
 const { showError } = require('../helpers/showError')
+const bcrypt = require('bcryptjs')
 
 const create = async (req, res) => {
 	const { rut, password, first_name, last_name, email, phone, role } = req.body
 
+	const salt = await bcrypt.genSalt(12)
+	const hashPassword = await bcrypt.hash(password, salt)
+
 	const payload = {
 		rut,
-		password,
+		password: hashPassword,
 		first_name,
 		last_name,
 		email,
@@ -78,4 +82,10 @@ const removeEmployeed = async (req, res) => {
 	}
 }
 
-module.exports = { create, getAllEmployees, getEmployeById, update, removeEmployeed }
+module.exports = {
+	create,
+	getAllEmployees,
+	getEmployeById,
+	update,
+	removeEmployeed,
+}
