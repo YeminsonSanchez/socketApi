@@ -6,7 +6,8 @@
 	"scripts": {
 		"dev": "node --watch ./app.js",
 		"build": "npm install",
-		"start": "node app.js"
+		"start": "node app.js",
+		"seed": "node ./src/seeds/seeds.js"
 	},
 	"keywords": [],
 	"author": "",

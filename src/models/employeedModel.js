@@ -104,10 +104,26 @@ const deleteEmployeed = async (id) => {
 	}
 }
 
+const getEmployedByRut = async (rut) => {
+	const SQLquery = {
+		text: 'SELECT id, rut, password, first_name, last_name, email, phone, role, created_at, updated_at FROM employed WHERE rut = $1',
+		values: [rut],
+	}
+	try {
+		const result = await pool.query(SQLquery)
+		// console.log(result.rows)
+		return result.rows
+	} catch (e) {
+		console.log('error al obtener datos en tabla employed: ', e.code, e.message)
+		throw new Error(e)
+	}
+}
+
 module.exports = {
 	createEmployeed,
 	getAllemployees,
 	getEmployeed,
 	updateEmployeed,
 	deleteEmployeed,
+	getEmployedByRut,
 }

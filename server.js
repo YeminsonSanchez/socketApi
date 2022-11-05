@@ -1,7 +1,11 @@
 const express = require('express')
 const cors = require('cors')
 require('dotenv').config()
-
+const {
+	seedsEmployed,
+	seedsClient,
+	seedsProducts,
+} = require('./src/seeds/seeds')
 
 const app = express()
 
@@ -25,6 +29,10 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
+//Seeds on DB
+// seedsEmployed()
+// seedsClient()
+// seedsProducts()
 
 app.listen(PORT, () => {
 	console.log('Server started on port ' + PORT)

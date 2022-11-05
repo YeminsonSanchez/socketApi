@@ -1,4 +1,4 @@
-const { showError } = require('./../helpers/showError')
+const { showError } = require('../helpers/showError')
 
 const {
 	newClient,
@@ -6,7 +6,7 @@ const {
 	deleteClient,
 	getClient,
 	getAllClient,
-} = require('../models/clientModels')
+} = require('../models/clientModel')
 
 const createClient = async (req, res) => {
 	const { rut_business, name, email, phone, address, region, comune, zip } =

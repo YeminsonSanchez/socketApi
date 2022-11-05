@@ -1,7 +1,8 @@
 const { faker } = require('@faker-js/faker')
-const { newClient } = require('../models/clientModels')
+const { newClient } = require('../models/clientModel')
 const { createEmployeed } = require('../models/employeedModel')
 const { newProduct } = require('../models/productModel')
+const bcrypt = require('bcryptjs')
 
 const dataRandom = () => {
 	const min = 1000000
@@ -28,7 +29,7 @@ const dataRandom = () => {
 }
 
 const seedsClient = async () => {
-	for (let index = 0; index < 50; index++) {
+	for (let index = 0; index < 10; index++) {
 		const { rutRandom, digitRandom } = dataRandom()
 		const payloadClient = {
 			rut_business: `${rutRandom}-${digitRandom}`,
@@ -46,11 +47,15 @@ const seedsClient = async () => {
 }
 
 const seedsEmployed = async () => {
-	for (let index = 0; index < 50; index++) {
+	for (let index = 0; index < 10; index++) {
+		const password = '123456'
+		const salt = await bcrypt.genSalt(12)
+		const hashPassword = await bcrypt.hash(password, salt)
+
 		const { rutRandom, digitRandom, role } = dataRandom()
 		const payloadEmployed = {
 			rut: `${rutRandom}-${digitRandom}`,
-			password: faker.internet.password(5),
+			password: hashPassword,
 			first_name: faker.name.firstName(),
 			last_name: faker.name.lastName(),
 			email: faker.internet.exampleEmail(),
@@ -61,8 +66,6 @@ const seedsEmployed = async () => {
 		// console.log(payloadEmployed)
 	}
 }
-
-
 
 const seedsProducts = async () => {
 	const category = ['Home', 'Electronics', 'Garden']
