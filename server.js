@@ -1,8 +1,7 @@
 const express = require('express')
 const cors = require('cors')
-const dotenv = require('dotenv')
-
-dotenv.config()
+require('dotenv').config()
+const seed = require('./src/seeds/seeds')
 
 const app = express()
 
@@ -26,6 +25,7 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
+// seed()
 app.listen(PORT, () => {
 	console.log('Server started on port ' + PORT)
 })

@@ -26,7 +26,7 @@ const newClient = async (payload) => {
 
 const updateClient = async (payload) => {
 	const SQLquery = {
-		text: 'UPDATE client SET first_name = $1, last_name = $2, email = $3, phone = $4, address = $5, region = $6, comune = $7, zip = $8 WHERE id = $9 RETURNING *',
+		text: 'UPDATE client SET rut_business = $1, name = $2, email = $3, phone = $4, address = $5, region = $6, comune = $7, zip = $8 WHERE id = $9 RETURNING *',
 		values: [
 			payload.rut_business,
 			payload.name,

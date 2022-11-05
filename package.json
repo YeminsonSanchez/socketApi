@@ -19,6 +19,7 @@
 		"socket.io": "^4.5.3"
 	},
 	"devDependencies": {
+		"@faker-js/faker": "^7.6.0",
 		"eslint": "8.24.0",
 		"eslint-config-prettier": "8.5.0",
 		"eslint-config-standard": "17.0.0",
