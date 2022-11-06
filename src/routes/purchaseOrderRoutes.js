@@ -4,9 +4,15 @@ const { isLogin } = require('../middlewares/isLogin')
 const { authAdmin } = require('../middlewares/authAdmin')
 
 const {
-  createPurchaseOrder,
+	createPurchaseOrder,
+	getPurchaseOrders,
+	getPurchaseOrderById,
+	updatePurchaseOrder,
 } = require('../controllers/purchaseOrdersController')
 
-router.post('/purchaseOrders', isLogin, authAdmin, createPurchaseOrder)
+router.post('/purchaseOrders', createPurchaseOrder)
+router.get('/purchaseOrders',  getPurchaseOrders)
+router.get('/purchaseOrder/:id', getPurchaseOrderById)
+router.put('/purchaseOrder/:id', updatePurchaseOrder)
 
 module.exports = router
