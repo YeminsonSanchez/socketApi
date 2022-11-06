@@ -3,11 +3,10 @@ const { getEmployedByRut } = require('../models/employeedModel')
 const bcrypt = require('bcryptjs')
 const { getJwtToken } = require('../helpers/createToken')
 
-
-
-
 const loginEmployed = async (req, res) => {
 	const { rut, password } = req.body
+	rut.toLowerCase()
+	password.toLowerCase()
 	try {
 		const employeed = await getEmployedByRut(rut)
 

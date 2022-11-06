@@ -7,6 +7,8 @@ const {
 	deleteProduct,
 } = require('../models/productModel')
 
+
+
 const createProduct = async (req, res) => {
 	const {
 		sku,

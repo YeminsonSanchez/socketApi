@@ -20,7 +20,7 @@ CREATE TABLE employed (
   last_name VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL,
   phone VARCHAR(255) NOT NULL,
-  role VARCHAR(255) NOT NULL DEFAULT 'user',
+  role VARCHAR(255) NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
@@ -71,3 +71,4 @@ CREATE TABLE product_order (
   FOREIGN KEY (product_id) REFERENCES product(id),
   FOREIGN KEY (purchase_order_id) REFERENCES purchase_order(id)
 );
+

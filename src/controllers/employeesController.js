@@ -11,6 +11,9 @@ const bcrypt = require('bcryptjs')
 const create = async (req, res) => {
 	const { rut, password, first_name, last_name, email, phone, role } = req.body
 
+	rut.toLowerCase()
+	password.toLowerCase()
+
 	const salt = await bcrypt.genSalt(12)
 	const hashPassword = await bcrypt.hash(password, salt)
 
