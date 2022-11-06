@@ -46,6 +46,17 @@ CREATE TABLE purchase_order (
   oc INT NOT NULL,
   employed_id INT NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
+  FOREIGN KEY (client_id) REFERENCES client(id),
+  FOREIGN KEY (employed_id) REFERENCES employed(id)
+);
+
+CREATE TABLE product_order (
+  id SERIAL PRIMARY KEY,
+  oc INT NOT NULL,
+  purchase_order_id INTEGER NOT NULL,
+  quantity INT NOT NULL,
+  product_id INTEGER NOT NULL,
   status VARCHAR(255) NOT NULL DEFAULT 'pending' CHECK (
     status IN (
       'pending',
@@ -55,20 +66,8 @@ CREATE TABLE purchase_order (
       'transit'
     )
   ),
-  updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
-  FOREIGN KEY (client_id) REFERENCES client(id),
-  FOREIGN KEY (employed_id) REFERENCES employed(id)
-);
-
-CREATE TABLE product_order (
-  oc INT NOT NULL,
-  purchase_order_id INTEGER,
-  quantity INT NOT NULL,
-  product_id INTEGER NOT NULL UNIQUE,
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
-  PRIMARY KEY (oc, product_id),
-  FOREIGN KEY (product_id) REFERENCES product(id),
   FOREIGN KEY (purchase_order_id) REFERENCES purchase_order(id)
 );
 

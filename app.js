@@ -12,6 +12,7 @@ app.use('/', require('./src/routes/productRoutes'))
 //routes for login
 app.use('/', require('./src/routes/loginRoutes'))
 
-
+//routes for purchase order
+app.use('/', require('./src/routes/purchaseOrderRoutes'))
 
 module.exports = app
