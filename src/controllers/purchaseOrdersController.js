@@ -1,168 +1,202 @@
 const { showError } = require('../helpers/showError')
-const { createProductOrder } = require('../models/productOrderModel')
 
 const {
 	createOrder,
-	getAllPurchaseOrders,
-	getPurchaseOrderByoC,
-	getPurchaseOrder,
+	getAllOrders,
+	getOrderById,
 	updateOrder,
+	deleteOrder,
+	getOrdersbyOc,
+	getAllOrdersByProductsId,
+	getAllOrdersByEmployedId,
+	getAllOrdersByClientId,
 } = require('../models/purchaseOrderModel')
 
 const createPurchaseOrder = async (req, res) => {
-	const { client_id, employed_id, products, quantity, oc } = req.body
+	const { client_id, oc, employed_id, product_id, quantity, status } = req.body
 
-	const payloadPurchaseOrder = {
+	const payload = {
 		client_id,
-		employed_id,
 		oc,
+		employed_id,
+		product_id,
+		quantity,
+		status,
 	}
-
 	try {
-		const purchaseOrder = await createOrder(payloadPurchaseOrder)
-
-		const productsArray = async () => {
-			for (let i = 0; i < products.length; i++) {
-				const payloadProductOrder = {
-					purchase_order_id: purchaseOrder.id,
-					product_id: products[i],
-					quantity: quantity[i],
-				}
-
-				console.log(payloadProductOrder)
-
-				const productOrder = await createProductOrder(payloadProductOrder)
-				console.log(productOrder)
-			}
-		}
-
-		productsArray()
-
-
-		res.status(201).json({
-			message: 'Orden de compra creada con exito',
-			purchaseOrder,
-			//productOrder,
-		})
+		//falta validar que existan los id de los productos, empleados y clientes antes de crear para manejar el error
+		const purchaseOrder = await createOrder(payload)
+		return res.status(201).json(purchaseOrder)
 	} catch (e) {
 		showError(res, e)
 	}
 }
 
-const getPurchaseOrderbyOc = async (req, res) => {
+const getAllPurchaseOrders = async (req, res) => {
+	try {
+		const purchaseOrders = await getAllOrders()
+		return res.status(200).json(purchaseOrders)
+	} catch (e) {
+		showError(res, e)
+	}
+}
+
+const getPurchaseOrderById = async (req, res) => {
+	const { id } = req.params
+	try {
+		const purchaseOrder = await getOrderById(id)
+		if (!purchaseOrder) {
+			return res.status(404).json({
+				message: `No se puede encontrar la orden con el id ${id} este id no existe en nuestros registros`,
+			})
+		}
+		return res.status(200).json(purchaseOrder)
+	} catch (e) {
+		showError(res, e)
+	}
+}
+
+const updatePurchaseOrder = async (req, res) => {
+	const { id } = req.params
+	const { client_id, oc, employed_id, product_id, quantity, status } = req.body
+	const payload = {
+		client_id,
+		oc,
+		employed_id,
+		product_id,
+		quantity,
+		status,
+	}
+	try {
+		const purchaseOrder = await updateOrder(id, payload)
+		if (!purchaseOrder) {
+			return res.status(404).json({
+				message: `No se puede editar la orden con el id ${id} este id no existe en nuestros registros`,
+			})
+		}
+		return res.status(200).json(purchaseOrder)
+	} catch (e) {
+		showError(res, e)
+	}
+}
+
+const deletePurchaseOrder = async (req, res) => {
+	const { id } = req.params
+	try {
+		const purchaseOrder = await deleteOrder(id)
+		if (!purchaseOrder) {
+			return res.status(404).json({
+				message: `No se puede eliminar la orden con el id ${id} este id no existe en nuestros registros`,
+			})
+		}
+		return res.status(200).json({ message: 'Purchase Order eliminada' })
+	} catch (e) {
+		showError(res, e)
+	}
+}
+
+const purchaseOrderByOc = async (req, res) => {
 	const { oc } = req.params
 	try {
-		const purchaseOrder = await getPurchaseOrderByoC(oc)
-
-		const products = purchaseOrder.map((product) => {
-			console.log(product)
-			return {
-				id: product.product_id,
-				sku: product.sku,
-				name: product.product_name,
-				quantity: product.quantity,
-				price: product.price,
-			}
-		})
-		console.log('products', products)
-
-		const data = {
-			purchaseOrder: [
-				{
-					order: {
-						id: purchaseOrder[0].id,
-						oc: purchaseOrder[0].oc,
-						status: purchaseOrder[0].status,
-					},
-					client: {
-						rut_business: purchaseOrder[0].rut_business,
-						name: purchaseOrder[0].name,
-						email: purchaseOrder[0].email,
-						phone: purchaseOrder[0].phone,
-						address: purchaseOrder[0].address,
-						region: purchaseOrder[0].region,
-						zip_code: purchaseOrder[0].zip,
-					},
-					seller: {
-						name:
-							purchaseOrder[0].first_name + ' ' + purchaseOrder[0].last_name,
-						email: purchaseOrder[0].employed_email,
-					},
-					products: products,
-				},
-			],
+		const purchaseOrders = await getOrdersbyOc(oc)
+		if (!purchaseOrders) {
+			return res.status(404).json({
+				message: `No se puede encontrar la orden con el oc ${oc} este oc no existe en nuestros registros`,
+			})
 		}
-
-		res.status(200).json({
-			message: 'Orden de compra encontrada',
-			data,
-		})
+		return res.status(200).json(purchaseOrders)
 	} catch (e) {
 		showError(res, e)
 	}
 }
 
-// const createPurchaseOrder = async (req, res) => {
-// 	const { client_id, oc, employed_id, status, quantity, product_id } = req.body
-// 	const payload = {
-// 		client_id,
-// 		oc,
-// 		employed_id,
-// 		status,
-// 		quantity,
-// 		product_id,
-// 	}
+const getAllPurchaseOrdersByProductsId = async (req, res) => {
+	const { product_id } = req.params
+	try {
+		const purchaseOrders = await getAllOrdersByProductsId(product_id)
+		if (!purchaseOrders) {
+			return res.status(404).json({
+				message: `No se puede encontrar la orden con el product_id ${product_id} este product_id no existe en nuestros registros`,
+			})
+		}
+		return res.status(200).json(purchaseOrders)
+	} catch (e) {
+		showError(res, e)
+	}
+}
 
-// 	try {
-// 		const result = await createOrder(payload)
-// 		return res.status(201).json(result)
-// 	} catch (e) {
-// 		showError(res, e)
-// 	}
-// }
+const getAllPurchaseOrdersByEmployeeId = async (req, res) => {
+	const { employee_id } = req.params
+	try {
+		const purchaseOrders = await getAllOrdersByEmployedId(employee_id)
+		if (!purchaseOrders) {
+			return res.status(404).json({
+				message: `No se puede encontrar la orden con el employed_id ${employee_id} este employed_id no existe en nuestros registros`,
+			})
+		}
+		return res.status(200).json(purchaseOrders)
+	} catch (e) {
+		showError(res, e)
+	}
+}
 
-// const getPurchaseOrders = async (req, res) => {
-// 	try {
-// 		const result = await getAllPurchaseOrders()
-// 		return res.status(200).json(result)
-// 	} catch (e) {
-// 		showError(res, e)
-// 	}
-// }
+const getAllPurchaseOrdersByClientId = async (req, res) => {
+	const { client_id } = req.params
+	try {
+		const purchaseOrders = await getAllOrdersByClientId(client_id)
+		if (!purchaseOrders) {
+			return res.status(404).json({
+				message: `No se puede encontrar la orden con el client_id ${client_id} este client_id no existe en nuestros registros`,
+			})
+		}
+		return res.status(200).json(purchaseOrders)
+	} catch (e) {
+		showError(res, e)
+	}
+}
 
-// const getPurchaseOrderById = async (req, res) => {
-// 	const { id } = req.params
-// 	try {
-// 		const result = await getPurchaseOrder(id)
-// 		return res.status(200).json(result)
-// 	} catch (e) {
-// 		showError(res, e)
-// 	}
-// }
+const getProductsByOc = async (req, res) => {
+	const { oc } = req.params
+	try {
+		const purchaseOrders = await getOrdersbyOc(oc)
+		if (!purchaseOrders) {
+			return res.status(404).json({
+				message: `No se pueden encontrar los productos con el oc ${oc} este oc no existe en nuestros registros`,
+			})
+		}
+		const groupForOc = purchaseOrders.reduce((r, a) => {
+			r[a.product_id] = [...(r[a.product_id] || []), a]
+			return r
+		}, {})
 
-// const updatePurchaseOrder = async (req, res) => {
-// 	const { id } = req.params
-// 	const { client_id, oc, employed_id, status, quantity, product_id } = req.body
-// 	const payload = {
-// 		client_id,
-// 		oc,
-// 		employed_id,
-// 		status,
-// 		quantity,
-// 		product_id,
-// 	}
-// 	try {
-// 		const result = await updateOrder(id, payload)
-// 		return res.status(200).json(result)
-// 	} catch (error) {
-// 		showError(res, error)
-// 	}
-// }
+		const products = Object.keys(groupForOc).map((key) => {
+			const product = groupForOc[key]
+			const quantity = product.reduce((acc, cur) => acc + cur.quantity, 0)
+			return {
+				oc: product[0].oc,
+				product_id: product[0].product_id,
+				quantity,
+				client_id: product[0].client_id,
+				employed_id: product[0].employed_id,
+				status: product[0].status,
+			}
+		})
+
+		return res.status(200).json(products)
+	} catch (e) {
+		showError(res, e)
+	}
+}
 
 module.exports = {
 	createPurchaseOrder,
-	getPurchaseOrderbyOc,
-	// getPurchaseOrders,
-	// getPurchaseOrderById,
-	// updatePurchaseOrder,
+	getAllPurchaseOrders,
+	getPurchaseOrderById,
+	updatePurchaseOrder,
+	deletePurchaseOrder,
+	purchaseOrderByOc,
+	getAllPurchaseOrdersByProductsId,
+	getAllPurchaseOrdersByEmployeeId,
+	getAllPurchaseOrdersByClientId,
+	getProductsByOc,
 }
