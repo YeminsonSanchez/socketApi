@@ -5,14 +5,16 @@ const { authAdmin } = require('../middlewares/authAdmin')
 
 const {
 	createPurchaseOrder,
+	getPurchaseOrderbyOc,
 	getPurchaseOrders,
 	getPurchaseOrderById,
 	updatePurchaseOrder,
 } = require('../controllers/purchaseOrdersController')
 
 router.post('/purchaseOrders', createPurchaseOrder)
-router.get('/purchaseOrders',  getPurchaseOrders)
-router.get('/purchaseOrder/:id', getPurchaseOrderById)
-router.put('/purchaseOrder/:id', updatePurchaseOrder)
+// router.get('/purchaseOrders',  getPurchaseOrders)
+router.get('/purchaseOrder/:oc', getPurchaseOrderbyOc)
+// router.put('/purchaseOrder/:id', updatePurchaseOrder)
 
 module.exports = router
+//
