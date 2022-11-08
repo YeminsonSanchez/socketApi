@@ -5,14 +5,29 @@ const { authAdmin } = require('../middlewares/authAdmin')
 
 const {
 	createPurchaseOrder,
-	getPurchaseOrders,
+	getAllPurchaseOrders,
 	getPurchaseOrderById,
 	updatePurchaseOrder,
+	deletePurchaseOrder,
+	purchaseOrderByOc,
+	getAllPurchaseOrdersByProductsId,
+	getAllPurchaseOrdersByEmployeeId,
+	getAllPurchaseOrdersByClientId,
+	getProductsByOc,
 } = require('../controllers/purchaseOrdersController')
 
 router.post('/purchaseOrders', createPurchaseOrder)
-router.get('/purchaseOrders',  getPurchaseOrders)
+router.get('/purchaseOrders', getAllPurchaseOrders)
 router.get('/purchaseOrder/:id', getPurchaseOrderById)
+router.get('/purchaseOrderByOc/:oc', purchaseOrderByOc)
+router.get('/purchaseOrdersByProductsId/:product_id', getAllPurchaseOrdersByProductsId)
+router.get('/purchaseOrdersByEmployeeId/:employee_id', getAllPurchaseOrdersByEmployeeId)
+router.get('/purchaseOrdersByClientId/:client_id', getAllPurchaseOrdersByClientId)
+
+router.get('/productsByOc/:oc', getProductsByOc)
+
 router.put('/purchaseOrder/:id', updatePurchaseOrder)
+router.delete('/purchaseOrder/:id', deletePurchaseOrder)
+
 
 module.exports = router
