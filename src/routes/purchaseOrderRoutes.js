@@ -16,7 +16,7 @@ const {
 	getProductsByOc,
 } = require('../controllers/purchaseOrdersController')
 
-router.post('/purchaseOrders', createPurchaseOrder)
+router.post('/purchaseOrders', isLogin, authAdmin, createPurchaseOrder)
 router.get('/purchaseOrders', getAllPurchaseOrders)
 router.get('/purchaseOrder/:id', getPurchaseOrderById)
 router.get('/purchaseOrderByOc/:oc', purchaseOrderByOc)
@@ -26,8 +26,8 @@ router.get('/purchaseOrdersByClientId/:client_id', getAllPurchaseOrdersByClientI
 
 router.get('/productsByOc/:oc', getProductsByOc)
 
-router.put('/purchaseOrder/:id', updatePurchaseOrder)
-router.delete('/purchaseOrder/:id', deletePurchaseOrder)
+router.put('/purchaseOrder/:id', isLogin, authAdmin, updatePurchaseOrder)
+router.delete('/purchaseOrder/:id', isLogin, authAdmin, deletePurchaseOrder)
 
 
 module.exports = router
