@@ -15,4 +15,7 @@ app.use('/', require('./src/routes/loginRoutes'))
 //routes for purchase order
 app.use('/', require('./src/routes/purchaseOrderRoutes'))
 
+//routes for depleted product
+app.use('/', require('./src/routes/depletedProductRoutes'))
+
 module.exports = app

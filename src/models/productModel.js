@@ -99,10 +99,66 @@ const deleteProduct = async (id) => {
 	}
 }
 
+const getProductBySku = async (sku) => {
+	const SQLquery = {
+		text: 'SELECT id, sku, name, description, package_number, category, stock, location, price, created_at, updated_at FROM product WHERE sku = $1',
+		values: [sku],
+	}
+	try {
+		const result = await pool.query(SQLquery)
+		// console.log(result.rows)
+		return result.rows
+	} catch (e) {
+		console.log('error al obtener datos en tabla product: ', e.code, e.message)
+		throw new Error(e)
+	}
+}
+
+const discountStock = async (product_id, quantity) => {
+	const SQLquery = {
+		text: 'UPDATE product SET stock = stock - $1 WHERE id = $2 RETURNING *',
+		values: [quantity, product_id],
+	}
+	try {
+		const result = await pool.query(SQLquery)
+		// console.log(result.rows)
+		return result.rows
+	} catch (e) {
+		console.log(
+			'error al actualizar datos en tabla product: ',
+			e.code,
+			e.message,
+		)
+		throw new Error(e)
+	}
+}
+
+const restoreQuantity = async (product_id, quantity) => {
+	const SQLquery = {
+		text: 'UPDATE product SET stock = stock + $1 WHERE id = $2 RETURNING *',
+		values: [quantity, product_id],
+	}
+	try {
+		const result = await pool.query(SQLquery)
+		// console.log(result.rows)
+		return result.rows
+	} catch (e) {
+		console.log(
+			'error al actualizar datos en tabla product: ',
+			e.code,
+			e.message,
+		)
+		throw new Error(e)
+	}
+}
+
 module.exports = {
 	newProduct,
 	getAllProduct,
 	getProductById,
 	updateProduct,
 	deleteProduct,
+	getProductBySku,
+	discountStock,
+	restoreQuantity,
 }

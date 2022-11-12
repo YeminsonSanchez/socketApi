@@ -53,3 +53,18 @@ CREATE TABLE purchase_order (
   FOREIGN KEY (employed_id) REFERENCES employed(id),
   FOREIGN KEY (product_id) REFERENCES product(id)
 );
+
+
+CREATE TABLE depleted_products (
+  id SERIAL PRIMARY KEY,
+  sku VARCHAR(255) NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  product_id INT NOT NULL,
+  employed_id INT NOT NULL,
+  quantity INT NOT NULL,
+  product_damage VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
+  FOREIGN KEY (product_id) REFERENCES product(id),
+  FOREIGN KEY (employed_id) REFERENCES employed(id)
+);
