@@ -35,6 +35,7 @@ const createPurchaseOrder = async (req, res) => {
 const getAllPurchaseOrders = async (req, res) => {
 	try {
 		const purchaseOrders = await getAllOrders()
+		console.log(purchaseOrders);
 		return res.status(200).json(purchaseOrders)
 	} catch (e) {
 		showError(res, e)
