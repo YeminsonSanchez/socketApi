@@ -5,7 +5,7 @@ const { getJwtToken } = require('../helpers/createToken')
 
 const loginEmployed = async (req, res) => {
 	const { rut, password } = req.body
-	password.toLowerCase()
+
 	try {
 		const employeed = await getEmployedByRut(rut)
 
