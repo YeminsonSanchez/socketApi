@@ -20,7 +20,7 @@ const dataRandom = () => {
 		'warehouse assistant',
 		'warehouse assistant',
 	]
-	const verifyDigit = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'K']
+	const verifyDigit = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'k']
 	const rutRandom = Math.floor(Math.random() * (max - min))
 	const digitRandom =
 		verifyDigit[Math.floor(Math.random() * verifyDigit.length)]
@@ -47,7 +47,7 @@ const seedsClient = async () => {
 }
 
 const seedsEmployed = async () => {
-	for (let index = 0; index < 10; index++) {
+	for (let index = 0; index < 50; index++) {
 		const password = '123456'
 		const salt = await bcrypt.genSalt(12)
 		const hashPassword = await bcrypt.hash(password, salt)

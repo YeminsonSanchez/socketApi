@@ -13,7 +13,7 @@ const createClient = async (req, res) => {
 		req.body
 
 	const payload = {
-		rut_business,
+		rut_business: rut_business.toLowerCase(),
 		name,
 		email,
 		phone,

@@ -8,8 +8,7 @@ const loginEmployed = async (req, res) => {
 
 	try {
 		const employeed = await getEmployedByRut(rut)
-
-		if (employeed[0] === undefined) {
+		if (employeed.length == 0) {
 			res.status(404).json({
 				message: 'No registrado',
 				code: 404,
