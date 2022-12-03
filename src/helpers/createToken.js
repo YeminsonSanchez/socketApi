@@ -15,7 +15,6 @@ const getJwtToken = (employed) => {
 		}
 		jwt.sign(payload, process.env.JWT_SECRET, options, (err, payload) => {
 			if (err) reject(err)
-			console.log(payload)
 			resolve(payload)
 		})
 	})

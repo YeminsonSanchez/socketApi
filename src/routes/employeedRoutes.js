@@ -12,11 +12,12 @@ const {
 } = require('../controllers/employeesController')
 
 // authEmployed
-router.get('/employeed', isLogin, getAllEmployees)
+router.get('/employeed', isLogin, authAdmin, getAllEmployees)
 router.get('/employeed/:id', isLogin, getEmployeById)
 router.put('/employeed/:id', isLogin, update)
 
 // authAdmin
+
 router.delete('/employeed/:id', isLogin, authAdmin, removeEmployeed)
 router.post('/employeed', isLogin, authAdmin, create)
 

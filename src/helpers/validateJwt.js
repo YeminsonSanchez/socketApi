@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const { showError } = require('./showError')
 
-const validateToken = async (tokenLocal, res) => {
+const validateToken = async (tokenLocal) => {
 	try {
 		const validate = await jwt.verify(
 			tokenLocal,
@@ -16,7 +16,7 @@ const validateToken = async (tokenLocal, res) => {
 
 		return validate
 	} catch (e) {
-		return showError(res, e)
+		throw new Error('Token no valido', e)
 	}
 }
 

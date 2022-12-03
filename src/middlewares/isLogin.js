@@ -1,21 +1,25 @@
-const { validateToken } = require('../helpers/validateJwt');
-const { showError } = require('../helpers/showError');
+const { validateToken } = require('../helpers/validateJwt')
+const { showError } = require('../helpers/showError')
 
 const isLogin = async (req, res, next) => {
-	try {
-		if (!req.header('Authorization')) {
-			return res.status(401).send({ message: 'Por favor inicia sesion' });
-		}
-		const token = req.header('Authorization').split(' ')[1];
-		const tokenData = await validateToken(token, res);
-		if (!tokenData) {
-			return res.status(401).send({ message: 'Token invalido' });
-		}
-		req.employed = tokenData;
-		next();
-	} catch (e) {
-		showError(res, e);
-	}
-};
+	if (!req.header('Authorization'))
+		return res.status(401).send({ message: 'Inicia sesion para continuar' })
 
-module.exports = { isLogin };
+	try {
+		const token = req.header('Authorization').replace('Bearer ', '')
+		const isValidToken = async () => await validateToken(token)
+		const isValid = await isValidToken()
+
+		if (!isValid == true) {
+			return
+		} else {
+			req.employed = isValid
+			next()
+		}
+	} catch (e) {
+		console.log(e)
+		return showError(res, e)
+	}
+}
+
+module.exports = { isLogin }
